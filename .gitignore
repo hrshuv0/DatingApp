@@ -358,3 +358,6 @@ out/
 # SSL
 **/ssl
 
+
+*.db-shm
+*.db-wal
