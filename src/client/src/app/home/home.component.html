@@ -7,16 +7,15 @@
             <button class="btn btn-outline-primary btn-lg me-2" (click)="registerToggle()">Register</button>
             <button class="btn btn-outline-info btn-lg me-2">Learn more</button>
         </div>
-
-        <div class="container" *ngIf="registerMode">
-            <div class="row justify-content-center">
-                <div class="col-4">
-                    <p>Register form goes here</p>
-                </div>
-
-            </div>
-
-        </div>
-
     </div>
+
+    <div class="container" *ngIf="registerMode">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <app-register></app-register>
+            </div>
+        </div>
+    </div>
+
+
 </div>
