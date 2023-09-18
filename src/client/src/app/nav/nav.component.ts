@@ -12,7 +12,7 @@ export class NavComponent implements OnInit{
     model: any = {};
     loggedIn: boolean = false;
 
-    constructor(private accountService: AccountService, private router: Router,
+    constructor(public accountService: AccountService, private router: Router,
                 private toastr: ToastrService) {
     }
 
