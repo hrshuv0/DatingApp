@@ -20,7 +20,7 @@ public class BuggyController : BaseApiController
         return "secret test";
     }
 
-    [Authorize]
+    
     [HttpGet("not-found")]
     public ActionResult<string> GetNotFound()
     {
@@ -31,7 +31,7 @@ public class BuggyController : BaseApiController
         return Ok(thing);
     }
 
-    [Authorize]
+    
     [HttpGet("server-error")]
     public ActionResult<string> GetServerError()
     {
@@ -42,7 +42,7 @@ public class BuggyController : BaseApiController
         return Ok(thingToReturn);
     }
 
-    [Authorize]
+    
     [HttpGet("bad-request")]
     public ActionResult<string> GetBadRequest()
     {
