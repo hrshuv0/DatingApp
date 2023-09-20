@@ -18,6 +18,8 @@ import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { ErrorInterceptor } from "./_interceptor/error.interceptor";
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { MemberCardComponent } from './member/member-card/member-card.component';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
     declarations: [
@@ -31,7 +33,8 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
         MessagesComponent,
         TestErrorComponent,
         NotFoundComponent,
-        ServerErrorComponent
+        ServerErrorComponent,
+        MemberCardComponent
     ],
     imports: [
         BrowserModule,
@@ -39,7 +42,8 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
         HttpClientModule,
         BrowserAnimationsModule,
         FormsModule,
-        SharedModule
+        SharedModule,
+        NgOptimizedImage
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
