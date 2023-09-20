@@ -20,6 +20,7 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { MemberCardComponent } from './member/member-card/member-card.component';
 import {NgOptimizedImage} from "@angular/common";
+import {JwtInterceptor} from "./_interceptor/jwt.interceptor";
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import {NgOptimizedImage} from "@angular/common";
         NgOptimizedImage
     ],
     providers: [
-        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]
 })
