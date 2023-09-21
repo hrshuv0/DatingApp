@@ -22,6 +22,7 @@ import { MemberCardComponent } from './member/member-card/member-card.component'
 import { NgOptimizedImage } from "@angular/common";
 import { JwtInterceptor } from "./_interceptor/jwt.interceptor";
 import { MemberEditComponent } from './member/member-edit/member-edit.component';
+import {LoadingInterceptor} from "./_interceptor/loading.interceptor";
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ import { MemberEditComponent } from './member/member-edit/member-edit.component'
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     ],
     bootstrap: [AppComponent]
 })

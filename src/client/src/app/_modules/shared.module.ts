@@ -4,6 +4,7 @@ import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { ToastrModule } from "ngx-toastr";
 import { TabsModule } from "ngx-bootstrap/tabs";
 import { NgxGalleryModule } from "@kolkov/ngx-gallery";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 @NgModule({
@@ -16,13 +17,17 @@ import { NgxGalleryModule } from "@kolkov/ngx-gallery";
             positionClass: 'toast-bottom-right',
             preventDuplicates: true
         }),
-        NgxGalleryModule
+        NgxGalleryModule,
+        NgxSpinnerModule.forRoot({
+            type: 'square-jelly-box',
+        })
     ],
     exports:[
         BsDropdownModule,
         ToastrModule,
         TabsModule,
-        NgxGalleryModule
+        NgxGalleryModule,
+        NgxSpinnerModule
     ]
 })
 export class SharedModule {
