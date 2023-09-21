@@ -23,6 +23,7 @@ import { NgOptimizedImage } from "@angular/common";
 import { JwtInterceptor } from "./_interceptor/jwt.interceptor";
 import { MemberEditComponent } from './member/member-edit/member-edit.component';
 import {LoadingInterceptor} from "./_interceptor/loading.interceptor";
+import { PhotoEditorComponent } from './member/photo-editor/photo-editor.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import {LoadingInterceptor} from "./_interceptor/loading.interceptor";
         NotFoundComponent,
         ServerErrorComponent,
         MemberCardComponent,
-        MemberEditComponent
+        MemberEditComponent,
+        PhotoEditorComponent
     ],
     imports: [
         BrowserModule,
