@@ -19,8 +19,9 @@ import { ErrorInterceptor } from "./_interceptor/error.interceptor";
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { MemberCardComponent } from './member/member-card/member-card.component';
-import {NgOptimizedImage} from "@angular/common";
-import {JwtInterceptor} from "./_interceptor/jwt.interceptor";
+import { NgOptimizedImage } from "@angular/common";
+import { JwtInterceptor } from "./_interceptor/jwt.interceptor";
+import { MemberEditComponent } from './member/member-edit/member-edit.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import {JwtInterceptor} from "./_interceptor/jwt.interceptor";
         TestErrorComponent,
         NotFoundComponent,
         ServerErrorComponent,
-        MemberCardComponent
+        MemberCardComponent,
+        MemberEditComponent
     ],
     imports: [
         BrowserModule,
