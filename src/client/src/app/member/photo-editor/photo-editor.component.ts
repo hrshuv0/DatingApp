@@ -7,6 +7,7 @@ import {AccountService} from "../../_services/account.service";
 import {MemberService} from "../../_services/member.service";
 import {ToastrService} from "ngx-toastr";
 import {take} from "rxjs";
+import {Photo} from "../../_models/photo";
 
 @Component({
   selector: 'app-photo-editor',
@@ -36,6 +37,22 @@ export class PhotoEditorComponent implements OnInit{
 
     fileOverBase(event: any) {
         this.hasBaseDropZoneOver = event;
+    }
+
+    setMainPhoto(photo: Photo){
+        this.memberService.setMainPhoto(photo.id).subscribe({
+            next: () => {
+                if(this.user && this.member){
+                    this.user.photoUrl = photo.url;
+                    this.accountService.setCurrentUser(this.user);
+                    this.member.photoUrl = photo.url;
+                    this.member.photos.forEach(p => {
+                        if(p.isMain) p.isMain = false;
+                        if(p.id === photo.id) p.isMain = true;
+                    });
+                }
+            }
+        });
     }
 
     initializeUploader() {
