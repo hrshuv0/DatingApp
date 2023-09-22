@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AccountService} from "../_services/account.service";
 import {ToastrService} from "ngx-toastr";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -10,13 +11,14 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Valid
 })
 export class RegisterComponent implements OnInit{
     @Output() cancelRegister = new EventEmitter();
-    model: any = {};
     registerForm!:FormGroup;
     maxDate: Date = new Date();
+    validationErrors: string[] = [];
 
     constructor(private accountService: AccountService,
                 private toastr: ToastrService,
-                private fb: FormBuilder) {
+                private fb: FormBuilder,
+                private router: Router) {
     }
     ngOnInit(): void {
         this.initializeForm();
@@ -47,17 +49,27 @@ export class RegisterComponent implements OnInit{
     }
 
     register() {
-        console.log(this.registerForm.value);
-        // this.accountService.register(this.model).subscribe({
-        //     next: () => {
-        //         this.cancel();
-        //     },
-        //     error: err => this.toastr.error(err.error),
-        // });
+        const dob = this.getDateOnly(this.registerForm.value.dateOfBirth);
+        const values = {...this.registerForm.value, dateOfBirth: dob};
+        this.accountService.register(values).subscribe({
+            next: () => {
+                this.router.navigateByUrl('/members');
+            },
+            error: err => {
+                this.validationErrors = err;
+            },
+        });
     }
 
     cancel() {
         this.cancelRegister.emit(false);
+    }
+
+    private getDateOnly(date: Date): string | undefined {
+        if(!date) return ;
+
+        let dob = new Date(date);
+        return new Date(dob.setMinutes(dob.getMinutes() - dob.getTimezoneOffset())).toISOString().split('T')[0];
     }
 
 }
