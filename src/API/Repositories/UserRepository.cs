@@ -57,9 +57,11 @@ public class UserRepository : IUserRepository
 
     public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
     {
-        var result = _context.Users
-            .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-            .AsNoTracking();
+        var query = _context.Users.AsQueryable();
+        query = query.Where(u => u.UserName != userParams.CurrentUsername);
+        query = query.Where(u => u.Gender == userParams.Gender);
+
+        var result = query.AsNoTracking().ProjectTo<MemberDto>(_mapper.ConfigurationProvider);
         
         return await PagedList<MemberDto>.CreateAsync(result, userParams.PageNumber, userParams.PageSize);
     }
