@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { MemberListComponent } from './member/member-list/member-list.component';
@@ -22,7 +22,7 @@ import { MemberCardComponent } from './member/member-card/member-card.component'
 import { NgOptimizedImage } from "@angular/common";
 import { JwtInterceptor } from "./_interceptor/jwt.interceptor";
 import { MemberEditComponent } from './member/member-edit/member-edit.component';
-import {LoadingInterceptor} from "./_interceptor/loading.interceptor";
+import { LoadingInterceptor } from "./_interceptor/loading.interceptor";
 import { PhotoEditorComponent } from './member/photo-editor/photo-editor.component';
 
 @NgModule({
@@ -48,6 +48,7 @@ import { PhotoEditorComponent } from './member/photo-editor/photo-editor.compone
         HttpClientModule,
         BrowserAnimationsModule,
         FormsModule,
+        ReactiveFormsModule,
         SharedModule,
         NgOptimizedImage
     ],

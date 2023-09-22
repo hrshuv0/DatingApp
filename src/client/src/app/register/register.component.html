@@ -1,23 +1,38 @@
 
-<form #registerFrom="ngForm" (ngSubmit)="register()" autocomplete="off">
+<form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
     <h2 class="text-center text-primary">Sign up</h2>
     <hr>
     <div class="mb-3">
         <input class="form-control"
                 type="text"
-                name="username"
+               [class.is-invalid]="registerForm.get('username')?.errors && registerForm.get('username')?.touched"
                 placeholder="Username"
-                [(ngModel)]="model.username"
+                formControlName="username"
         >
+        <div class="invalid-feedback">Please enter username</div>
     </div>
 
     <div class="mb-3">
         <input class="form-control"
+               [class.is-invalid]="registerForm.get('password')?.errors && registerForm.get('password')?.touched"
                 type="password"
-                name="password"
                 placeholder="Password"
-                [(ngModel)]="model.password"
+                formControlName="password"
         >
+        <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('required')">Please enter password</div>
+        <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('minlength')">Password must be at least 4 characters</div>
+        <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('maxlength')">Password must be at most 8 characters</div>
+    </div>
+
+    <div class="mb-3">
+        <input class="form-control"
+               [class.is-invalid]="registerForm.get('confirmPassword')?.errors && registerForm.get('confirmPassword')?.touched"
+                type="password"
+                placeholder="Confirm Password"
+                formControlName="confirmPassword"
+        >
+        <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword')?.hasError('required')">Please enter confirm password</div>
+        <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword')?.hasError('isMatching')">Confirm password must match password</div>
     </div>
 
     <div class="text-center">
@@ -26,3 +41,6 @@
     </div>
 
 </form>
+
+<p>Form value: {{registerForm.status | json}}</p>
+<p>Form value: {{registerForm.value | json}}</p>
