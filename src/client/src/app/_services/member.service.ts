@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from "../../environments/environment.development";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Member } from "../_models/member";
-import {map, Observable, of} from "rxjs";
-import {PaginatedResult} from "../_models/pagination";
-import {UserParams} from "../_models/userParams";
+import { map, Observable, of, take } from "rxjs";
+import { PaginatedResult } from "../_models/pagination";
+import { UserParams } from "../_models/userParams";
+import { AccountService } from "./account.service";
+import { User } from "../_models/user";
 
 @Injectable({
     providedIn: 'root'
@@ -13,8 +15,34 @@ export class MemberService {
     baseUrl = environment.apiUrl;
     members: Member[] = [];
     memberCache = new Map();
+    userParams!: UserParams;
+    user!: User;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private accountService: AccountService) {
+        this.accountService.currentUser$.pipe(take(1)).subscribe({
+            next: user => {
+                if(user){
+                    this.userParams = new UserParams(user);
+                    this.user = user;
+                }
+            }
+        });
+    }
+
+    getUserParams(){
+        return this.userParams;
+    }
+
+    setUserParams(params: UserParams){
+        this.userParams = params;
+    }
+
+    resetUserParams(){
+        if(this.user){
+            this.userParams = new UserParams(this.user);
+            return this.userParams;
+        }
+        return;
     }
 
     getMembers(userParams: UserParams): Observable<any> {
