@@ -125,7 +125,7 @@ export class MemberService {
         let params = new HttpParams()
         params = params.append('predicate', predicate);
 
-        return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'likes', params);
+        return this.http.get<Member[]>(this.baseUrl + 'likes', {params})
     }
 
 
