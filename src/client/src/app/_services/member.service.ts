@@ -117,6 +117,17 @@ export class MemberService {
         return params;
     }
 
+    addLike(username: string) {
+        return this.http.post(this.baseUrl + 'likes/' + username, {});
+    }
+
+    getLikes(predicate: string) {
+        let params = new HttpParams()
+        params = params.append('predicate', predicate);
+
+        return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'likes', params);
+    }
+
 
 
 
