@@ -29,11 +29,8 @@ public class AccountController : BaseApiController
         if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
         
         var user = _mapper.Map<AppUser>(registerDto);
-        using var hmac = new HMACSHA512();
         
-        user.UserName = registerDto.Username.ToLower();
-        user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
-        user.PasswordSalt = hmac.Key;
+        
         
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
@@ -54,14 +51,7 @@ public class AccountController : BaseApiController
         
         if (user == null) return Unauthorized("Invalid username");
         
-        using var hmac = new HMACSHA512(user.PasswordSalt);
         
-        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-        
-        for (var i = 0; i < computedHash.Length; i++)
-        {
-            if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
-        }
         
         return new UserDto
         {

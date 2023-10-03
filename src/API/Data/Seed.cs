@@ -19,11 +19,7 @@ public class Seed
 
         foreach (var user in users)
         {
-            using var hmac = new HMACSHA512();
-
-            user.UserName = user.UserName.ToLower();
-            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("1234"));
-            user.PasswordSalt = hmac.Key;
+            user.UserName = user.UserName!.ToLower();
 
             context.Users.Add(user);
         }
