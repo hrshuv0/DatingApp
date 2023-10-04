@@ -24,7 +24,6 @@ public class UsersController : BaseApiController
         _photoService = photoService;
     }
     
-    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetUsers([FromQuery] UserParams userParams)
     {
