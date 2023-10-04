@@ -11,7 +11,12 @@ import {RolesModalComponent} from "../../modals/roles-modal/roles-modal.componen
 })
 export class UserManagementComponent implements OnInit {
     users: User[] = [];
-    bsModalRef: BsModalRef<RolesModalComponent> = new BsModalRef<RolesModalComponent>()
+    bsModalRef: BsModalRef<RolesModalComponent> = new BsModalRef<RolesModalComponent>();
+    availableRoles = [
+        'Admin',
+        'Moderator',
+        'Member'
+    ];
 
     constructor(private adminService: AdminService, private  modalService: BsModalService) {
 
@@ -30,22 +35,42 @@ export class UserManagementComponent implements OnInit {
     }
 
     openRolesModal(user: User) {
-        const initialState:ModalOptions = {
-            initialState: {
-                list: [
-                    'Do thing 1',
-                    'Do thing 2',
-                    'Do thing 3',
-                    ],
-                title: 'Modal with component',
-            },
-            class: 'modal-lg',
+        const config:ModalOptions = {
+            class: 'modal-dialog-top',
             focus: true,
             animated: true,
+            initialState: {
+                username: user.username,
+                availableRoles: this.availableRoles,
+                selectedRoles: [...user.roles]
+            }
 
         }
-        this.bsModalRef = this.modalService.show(RolesModalComponent, initialState);
-        this.bsModalRef.content!.closeBtnName = 'Close';
+        this.bsModalRef = this.modalService.show(RolesModalComponent, config);
+        this.bsModalRef.onHide?.subscribe({
+            next: () => {
+                const selectedRoles = this.bsModalRef.content?.selectedRoles;
+                if(!this.arrayEqual(selectedRoles!, user.roles)){
+                    this.adminService.updateUserRoles(user.username, selectedRoles!.join(',')).subscribe({
+                        next: roles => {
+                            user.roles = [...roles];
+                            this.getUsersWithRoles();
+                        }
+                    });
+
+            }
+        }});
+        // this.bsModalRef.content!.closeBtnName = 'Close';
+    }
+
+    private arrayEqual(arr1: any[], arr2: any[]){
+        return JSON.stringify(arr1.sort()) === JSON.stringify(arr2.sort());
+
+        // if(arr1.length !== arr2.length) return false;
+        // for(let i = 0; i < arr1.length; i++){
+        //     if(arr1[i] !== arr2[i]) return false;
+        // }
+        // return true;
     }
 
 }
