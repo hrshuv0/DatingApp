@@ -88,13 +88,6 @@ public class MessageRepository : IMessageRepository
         return result;
     }
 
-    public async Task<bool> SaveAllAsync()
-    {
-        var result = await _context.SaveChangesAsync();
-        
-        return result > 0;
-    }
-
     public void AddGroup(Group group)
     {
         _context.Groups.Add(group);

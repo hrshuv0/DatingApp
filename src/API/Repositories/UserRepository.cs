@@ -25,13 +25,6 @@ public class UserRepository : IUserRepository
         _context.Entry(user).State = EntityState.Modified;
     }
 
-    public async Task<bool> SaveAllAsync()
-    {
-        var result = await _context.SaveChangesAsync();
-        
-        return result > 0;
-    }
-
     public async Task<IEnumerable<AppUser>> GetUsersAsync()
     {
         var result = await _context.Users
